@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Data Definition Language (DDL)",
+    "subtitle": "8",
+    "descriptions": "Data Definition Language (DDL) adalah kelompok perintah kueri yang digunakan untuk membangun dan memodifikasi struktur objek dalam basis data. Perintah DDL yang umum digunakan dalam kueri SQL adalah CREATE, ALTER, dan DROP",
+    "link": "/details/data-definition-language"
+  },
+  {
+    "title": "Data Manipulation Language (DML)",
+    "subtitle": "12",
+    "descriptions": "Data Manipulation Language (DML) adalah kelompok perintah kueri yang mencakup perintah-perintah yang mengizinkan untuk memainpulasi atau memodifikasi data di dalam basis data. Perintah DML yang umum digunakan dalam kueri SQL adalah SELECT, UPDATE, INSERT, dan DELETE.",
+    "link": "/details/data-manipulation-language"
+  },
+  {
+    "title": "Data Control Language (DCL)",
+    "subtitle": "2",
+    "descriptions": "Data Control Language (DCL) adalah kelompok perintah kueri berfungsi untuk memberikan atau mencabut hak, izin, dan kontrol lainnya dari sistem basis data. Perintah DCL yang umum digunakan dalam kueri SQL adalah GRANT dan REVOKE.",
+    "link": "/details/data-control-language"
+  }
+]

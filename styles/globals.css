@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* Head Font */
+  @font-face {
+    font-family: "Ysabeau";
+    src: url("/fonts/Ysabeau.ttf");
+  }
+
+  /* Body Font */
+  @font-face {
+    font-family: "Fira Sans";
+    src: url("/fonts/FiraSans.ttf");
+  }
+
+  @layer components {
+    .actives {
+      @apply text-white bg-primary-400 px-8 py-4 rounded-xl transition ease-in-out hover:shadow-lg hover:bg-primary-200 duration-300
+    }
+    .actives-login {
+      @apply text-primary-400 px-5 py-2.5 transition ease-in-out hover:border-primary-200 duration-300
+    }
+
+    /* For Webkit-based browsers (Chrome, Safari and Opera) */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+  }
+}

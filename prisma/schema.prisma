@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  Id        Int        @id @default(autoincrement())
+  Email     String     @unique(map: "Email") @db.VarChar(255)
+  Password  String     @db.Char(32)
+  CreatedAt DateTime   @default(now()) @db.Timestamp(0)
+  Material  Material[]
+  Profile   Profile[]
+}
+
+model Material {
+  Id        Int     @id @default(autoincrement())
+  Title     String  @db.VarChar(255)
+  Complete  Boolean @default(false)
+  AccountId Int
+  Account   Account @relation(fields: [AccountId], references: [Id], onUpdate: Restrict, map: "material_ibfk_1")
+
+  @@index([AccountId], map: "AccountId")
+}
+
+model Profile {
+  Id        Int     @id @default(autoincrement())
+  FirstName String? @db.VarChar(255)
+  LastName  String? @db.VarChar(255)
+  School    String? @db.VarChar(255)
+  Picture   Bytes?  @db.MediumBlob
+  ProfileId Int
+  Account   Account @relation(fields: [ProfileId], references: [Id], onUpdate: Restrict, map: "profile_ibfk_1")
+
+  @@index([ProfileId], map: "ProfileId")
+}
