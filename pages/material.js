@@ -16,7 +16,7 @@ export default function Material() {
             <p className="text-xl font-head font-semibold text-secondary-400 text-center">
               Daftar Materi
             </p>
-            <Card/>
+            <Card />
           </div>
         </div>
       </div>

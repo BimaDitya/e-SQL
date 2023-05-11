@@ -47,7 +47,7 @@ export function RegistrationForm() {
             </p>
           ),
         });
-        router.reload();
+        router.push("/login");
       })
       .catch(async () => {
         await alertWithSwal.fire({

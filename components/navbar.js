@@ -54,11 +54,14 @@ export const Navbar = () => {
               </Link>
             </li>
           </ul>
-          <div className="px-5 py-2.5 border-b-2 font-semibold text-lg border-secondary-400 transition ease-in-out hover:border-primary-200 duration-300">
-            <Link
-              href="/login"
-              className={router.pathname == "/login" ? "actives-login" : "text-secondary-400 transition ease-in-out hover:text-primary-400 duration-300"}
-            >
+          <div
+            className={
+              router.pathname == "/login"
+                ? "actives-login"
+                : "px-6 py-3 rounded-xl bg-secondary-400 text-white transition hover:bg-primary-200 hover:shadow-lg ease-in-out duration-300"
+            }
+          >
+            <Link href="/login" className="">
               Login
             </Link>
           </div>

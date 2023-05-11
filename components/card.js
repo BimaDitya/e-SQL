@@ -11,10 +11,10 @@ export default function Card() {
         >
           <div className="flex justify-between flex-row">
             <div className="flex flex-col">
-              <h6 class="py-2 text-2xl font-bold font-head text-secondary-400">
+              <h6 className="py-2 text-2xl font-bold font-head text-secondary-400">
                 {MaterialCard.title}
               </h6>
-              <p class="pb-4 font-body text-gray-400 text-justify pr-32">{MaterialCard.descriptions}</p>
+              <p className="pb-4 font-body text-gray-400 text-justify pr-32">{MaterialCard.descriptions}</p>
               <div className="w-fit font-head px-8 py-4 bg-primary-400 text-white rounded-xl transition ease-in-out hover:bg-primary-200 hover:shadow-md duration-300">
                 <Link href={MaterialCard.link}>Pelajari Materi</Link>
               </div>

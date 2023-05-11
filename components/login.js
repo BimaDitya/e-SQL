@@ -1,3 +1,4 @@
+import axios from "axios";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -13,15 +14,13 @@ export function LoginForm() {
 
   const alertWithSwal = withReactContent(Swal);
 
-  async function loginHandle(data) {
-    await fetch("/api/login-account", {
-      method: "POST",
-      body: JSON.stringify(data),
+  async function LoginHandle(data) {
+    await axios("/api/login", data, {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(async (res) => {
-      if (res.ok) {
+    })
+      .then(async () => {
         reset();
         await alertWithSwal.fire({
           toast: true,
@@ -32,12 +31,12 @@ export function LoginForm() {
           imageUrl: "/icons/success.png",
           imageWidth: "20%",
           title: (
-            <p className="font-head font-semibold text-emerald-600 text-lg text-center tracking-wide">
+            <p className="font-head font-semibold text-green-600 text-lg text-center tracking-wide">
               Login Berhasil
             </p>
           ),
           html: (
-            <p className="font-body text-center text-emerald-500 font-medium tracking-wide">
+            <p className="font-body text-center text-green-400 font-medium tracking-wide">
               Login Dengan{" "}
               <p className="font-semibold font-body">
                 {data.email.toUpperCase()}
@@ -46,9 +45,10 @@ export function LoginForm() {
             </p>
           ),
         });
-        router.reload();
-      } else {
-        alertWithSwal.fire({
+        router.push("/");
+      })
+      .catch(async () => {
+        await alertWithSwal.fire({
           toast: true,
           timer: 3000,
           timerProgressBar: true,
@@ -58,25 +58,22 @@ export function LoginForm() {
           imageWidth: "20%",
           title: (
             <p className="font-head font-semibold text-red-600 text-lg text-center tracking-wide">
-              Kesalahan Ketika Login
+              Login Gagal
             </p>
           ),
           html: (
-            <p className="font-body text-sm text-center text-red-400 font-medium tracking-wide">
-              Periksa Kembali Email atau Kata Sandi!
+            <p className="font-body text-center text-red-400 font-medium tracking-wide">
+              Periksa Kembali Email & Kata Sandi
             </p>
           ),
         });
-      }
-    });
+      });
   }
   return (
-    <form noValidate className="space-y-4" onSubmit={handleSubmit(loginHandle)}>
+    <form noValidate className="space-y-4" onSubmit={handleSubmit(LoginHandle)}>
       {/* Alamat Email */}
       <div className="flex flex-col">
-        <label className="font-head text-secondary-400">
-          Alamat Email
-        </label>
+        <label className="font-head text-secondary-400">Alamat Email</label>
         <input
           label="Email"
           name="email"
@@ -94,16 +91,12 @@ export function LoginForm() {
           </p>
         )}
         {errors.email && errors.email.type === "pattern" && (
-          <p className="text-red-400 text-sm font-head">
-            Email Tidak Valid
-          </p>
+          <p className="text-red-400 text-sm font-head">Email Tidak Valid</p>
         )}
       </div>
       {/* Kata Sandi */}
       <div className="flex flex-col">
-        <label className="font-head text-secondary-400">
-          Kata Sandi
-        </label>
+        <label className="font-head text-secondary-400">Kata Sandi</label>
         <input
           label="Password"
           name="password"
@@ -119,12 +112,10 @@ export function LoginForm() {
           })}
         />
         {errors.password && errors.password.type === "required" && (
-          <p className="text-red-400 text-sm font-head">
-            Masukkan Kata Sandi
-          </p>
+          <p className="text-red-400 text-sm font-head">Masukkan Kata Sandi</p>
         )}
         {errors.password && errors.password.type === "minLength" && (
-          <p className="text-red-400 text-sm font-body font-semibold">
+          <p className="text-red-400 text-sm font-head">
             Kata Sandi Minimal Harus Terdiri Dari 6 karakter
           </p>
         )}
