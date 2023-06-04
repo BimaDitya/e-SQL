@@ -23,9 +23,8 @@ export default function SQLEditor() {
 					locateFile: (file) => `https://sql.js.org/dist/${file}`,
 				});
 
-				const sqlLite = await fetch('/Chinook_Sqlite.sqlite');
+				const sqlLite = await fetch('/chinook.sqlite');
 				const sqlBuff = await sqlLite.arrayBuffer();
-				console.log(sqlBuff);
 				setDatabase(new SQL.Database(new Uint8Array(sqlBuff)));
 			} catch (error) {
 				setError(error)
@@ -37,12 +36,11 @@ export default function SQLEditor() {
 
 	async function execute() {
 		try {
-			console.log(database);
 			const result = await database.exec(code);
-			setResults(console.log(result));
+			setResults(result);
 			setError(null);
 		} catch (error) {
-			setError(console.log(error));
+			setError(error.message.toUpperCase());
 			setResults([]);
 		}
 	}
@@ -98,10 +96,12 @@ export default function SQLEditor() {
 						Output
 					</p>
 					<div className="w-full">
-						{/* <pre className="font-body text-sm text-rose-600">{error || ""}</pre> */}
-						{/* {results.map(({ columns, values }) => (
+						<pre className="pt-2 text-sm font-body text-red-400">
+							{error || ""}
+						</pre>
+						{results.map(({ columns, values }) => (
 							<TableSQL key={values} columns={columns} values={values} />
-						))} */}
+						))}
 					</div>
 				</div>
 			</div>
