@@ -17,16 +17,28 @@ export default function SQLEditor() {
 	const [database, setDatabase] = useState(null);
 	
 	useEffect(() => {
-		initSqlJs({
-			locateFile: (file) => `https://sql.js.org/dist/${file}`,
-		})
-			.then((SQL) => setDatabase(new SQL.Database()))
-			.catch((error) => setError(error));
+		const initSql = async () => {
+			try {
+				const SQL = await initSqlJs({
+					locateFile: (file) => `https://sql.js.org/dist/${file}`,
+				});
+
+				const sqlLite = await fetch('/Chinook_Sqlite.sqlite');
+				const sqlBuff = await sqlLite.arrayBuffer();
+				console.log(sqlBuff);
+				setDatabase(new SQL.Database(new Uint8Array(sqlBuff)));
+			} catch (error) {
+				setError(error)
+			}
+		};
+
+		initSql();
 	}, []);
 
 	async function execute() {
 		try {
-			const result = database.exec(code)
+			console.log(database);
+			const result = await database.exec(code);
 			setResults(console.log(result));
 			setError(null);
 		} catch (error) {
