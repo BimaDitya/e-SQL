@@ -2,16 +2,11 @@
 const nextConfig = {
 	reactStrictMode: false,
 	transpilePackages: ["@uiw/react-codemirror"],
-	webpack(config) {
+	webpack(config, { isServer }) {
+		if (!isServer) {
+			config.resolve.fallback.fs = false;
+		}
 		config.experiments = { ...config.experiments, topLevelAwait: true };
-		module = {
-			rules: [
-				{
-					test: /\.wasm$/,
-					type: "asset/inline",
-				},
-			],
-		};
 		return config;
 	},
 };

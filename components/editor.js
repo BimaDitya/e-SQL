@@ -1,4 +1,4 @@
-import axios from "axios";
+import initSqlJs from "sql.js";
 import TableSQL from "./table";
 import { hint } from "codemirror";
 import React, { useState, useEffect } from "react";
@@ -14,18 +14,23 @@ export default function SQLEditor() {
 	const [code, setCode] = useState("");
 	const [error, setError] = useState(null);
 	const [results, setResults] = useState([]);
+	const [database, setDatabase] = useState(null);
+	
+	useEffect(() => {
+		initSqlJs({
+			locateFile: (file) => `https://sql.js.org/dist/${file}`,
+		})
+			.then((SQL) => setDatabase(new SQL.Database()))
+			.catch((error) => setError(error));
+	}, []);
 
 	async function execute() {
 		try {
-			const response = await axios.post("api/processing", code, {
-				headers: {
-					"Content-Type": "application/auto",
-				},
-			});
-			setResults(response.data);
-			setError();
+			const result = database.exec(code)
+			setResults(console.log(result));
+			setError(null);
 		} catch (error) {
-			setError(error.response.data);
+			setError(console.log(error));
 			setResults([]);
 		}
 	}
@@ -41,7 +46,6 @@ export default function SQLEditor() {
 						<div className="w-auto h-48">
 							<CodeMirror
 								height="100%"
-								value={code}
 								onChange={(editor) => setCode(editor.getValue())}
 								options={{
 									hintOptions: { completeSingle: false, hint: hint.sql },
@@ -82,10 +86,10 @@ export default function SQLEditor() {
 						Output
 					</p>
 					<div className="w-full">
-						<pre className="font-body text-sm text-rose-600">{error || ""}</pre>
-						{results.map(({ columns, values }) => (
+						{/* <pre className="font-body text-sm text-rose-600">{error || ""}</pre> */}
+						{/* {results.map(({ columns, values }) => (
 							<TableSQL key={values} columns={columns} values={values} />
-						))}
+						))} */}
 					</div>
 				</div>
 			</div>
